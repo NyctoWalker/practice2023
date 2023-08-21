@@ -1,0 +1,143 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: #ffc970;
+    /*background: #ccc;*/
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+main{
+    height: 100%;
+    padding: 30px;
+    min-height: 70vh;
+}
+
+li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+aside {
+    float: up;
+/*    background: #fdf00f;*/
+    background: #ffc970;
+    width: 100hh;
+    height: 20vh;
+    color: #fff;
+    border-bottom: 2px solid #000;
+}
+
+aside img {
+    width: 50px;
+    height: 50px;
+    float: up;
+}
+
+aside ul {
+    list-style: none
+    list-style-type: none;
+    margin: 0;
+    padding: 1%;
+    overflow: hidden;
+}
+
+aside ul li {
+    color: 000;
+    font-size: 20px;
+    margin-right: 5%;
+    display: block;
+    float: left;
+    position: relative;
+    background-color: #bf9e32;
+    border-radius: 15px;
+    left: 20%;
+    transition: transform .3s ease;
+}
+
+aside ul li:hover, aside ul a:hover {
+    color: fff;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+
+main .features {
+    color: black;
+    margin-top: 2%;
+    text-align: center;
+    width:100%;
+    min-height:100%;
+}
+
+.column {
+  background: white;
+  margin-left: 3%;
+  padding: 1%;
+}
+
+.left {
+  width: 20%;
+}
+
+.right {
+  width: 70%;
+}
+
+.wrapper {
+    display: flex;
+    background: #1865ad;
+    width: 100%;
+    min-height: 10vh;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    border-top: 2px solid #000;
+}
+
+.block-text-img{
+  background: #fff;
+  width: auto;
+  padding-top: 30px;
+  display: flex;
+}
+
+.text-block-ex{
+    width: 100vh;
+    text-align: left;
+    font-size: 14px;
+}
+
+.text-block {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100vh;
+}
+
+.text-block a{
+    color: #fff;
+    padding: 15%;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.search {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.tag-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

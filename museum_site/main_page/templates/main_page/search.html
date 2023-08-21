@@ -1,0 +1,78 @@
+{% extends 'main_page/pattern.html' %}
+{% load static %}
+
+{% block title %}Поиск{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Добро пожаловать на страницу поиска!</h1>
+        <div class="row">
+            <div class="column left">
+                <form action="{% url 'search' %}" method="get" class="search">
+                    <label for="search/name">Поиск: </label>
+                    <input id="search/name" type="text" name="q" placeholder="Введите название...">
+                    <input type="submit" value="OK">
+                </form>
+
+                <div class="text-block-ex">
+                    <h5>Теги для поиска:</h5>
+                </div>
+
+                <div class="tag-checkbox">
+                    <form>
+                        <label>
+                            <input type="checkbox">
+                            Пример тега
+                        </label>
+                    </form>
+
+                    <form>
+                        <label>
+                            <input type="checkbox">
+                            Пример тега
+                        </label>
+                    </form>
+
+                    <form>
+                        <label>
+                            <input type="checkbox">
+                            Пример тега
+                        </label>
+                    </form>
+                </div>
+
+
+            </div>
+
+            <div class="column right">
+                {% for exp in exposition_info %}
+                <div class="block-text-img">
+                    <div class="img-block">
+                        <img src="{% static 'main_page/pic/notdef-solid.svg' %}" width="128" height="128">
+                    </div>
+                    <div class="text-block-ex">
+                        <h5>{{exp.exposition_name}}</h5>
+                        <h6>Описание</h6>
+                        <p>{{exp.exposition_desc}}</p>
+                    </div>
+                </div>
+                {%endfor%}
+
+                <hr align="center" width="100%" size="4" color="black" />
+
+                {% for item in all_info %}
+                <div class="block-text-img">
+                    <div class="img-block">
+                        <img src="{% static 'main_page/pic/notdef-solid.svg' %}" width="128" height="128">
+                    </div>
+                    <div class="text-block-ex">
+                        <h5>{{item.exhibit_name}}</h5>
+                        <h6>Описание</h6>
+                        <p>{{item.exhibit_desc}}</p>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+{% endblock %}

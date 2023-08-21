@@ -1,0 +1,24 @@
+{% extends 'main_page/pattern.html' %}
+{% load static %}
+
+{% block title %}О музее{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Информация о музее</h1>
+        <div class="row">
+            <div class="column left">
+                <!-- Картинка логотипа музея (нужно поменять на другую - название тестовое) (и размеры поменять а то я фиг знает, так ок или не ок) -->
+                <p><img src="{% static 'logo.svg' %}" width="100" height="111"></p>
+                <p>Название музея</p>
+            </div>
+
+            <div class="column right">
+                <p>Адрес: ул. "Название улицы" д.1<hr></p>
+                <p>Почта: pochtamusey@mail.ru<hr></p>
+                <p>Контактный телефон: +780000000<hr></p>
+                <p>Время работы: вт.-вс.: 10:00 - 20:00; пн: выходной<hr></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
