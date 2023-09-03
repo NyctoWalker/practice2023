@@ -12,4 +12,6 @@ urlpatterns = [
     path('plan/1', views.plan, name='plan1'),
     path('plan/2', views.plan, name='plan2'),
     path('plan/3', views.plan, name='plan3'),
+    path('exhibits/<int:pk>', views.ExpDetailView.as_view(), name='exp-detail'),
+    path('expositions/<int:pk>', views.ExponDetailView.as_view(), name='expon-detail'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

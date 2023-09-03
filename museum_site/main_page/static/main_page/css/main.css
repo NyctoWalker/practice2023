@@ -131,6 +131,10 @@ footer {
     padding-top: 0;
 }
 
+.img-block {
+    margin-right: 6px;
+}
+
 .search {
     margin-top: 2%;
     margin-bottom: 2%;
@@ -140,4 +144,8 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+.form-check {
+    display: flex;
 }

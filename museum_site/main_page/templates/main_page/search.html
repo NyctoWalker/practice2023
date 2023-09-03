@@ -10,68 +10,86 @@
             <div class="column left">
                 <form action="{% url 'search' %}" method="get" class="search">
                     <label for="search/name">Поиск: </label>
-                    <input id="search/name" type="text" name="q" placeholder="Введите название...">
-                    <input type="submit" value="OK">
+                    <input id="search/name" type="text" name="q" placeholder="Введите название..." value="{{search_quary}}">
+                    <input type="submit" value="Поиск">
+
+                    <div class="text-block-ex">
+                        <h5>Поиск по:</h5>
+                    </div>
+
+                    <div class="form-check">
+                        {% if expos_checked %}
+                            <input type="checkbox" value="Expos" name="exp[]" checked />
+                        {% else %}
+                            <input type="checkbox" value="Expos" name="exp[]" />
+                        {% endif %}
+                        <label for="Expos">Экспозициям</label>
+                    </div>
+
+                    <div class="form-check">
+                        {% if expon_checked %}
+                            <input type="checkbox" value="Expon" name="exp[]" checked />
+                        {% else %}
+                            <input type="checkbox" value="Expon" name="exp[]" />
+                        {% endif %}
+                        <label for="Expon">Экспонатам</label>
+                    </div>
+
+                    <div class="text-block-ex">
+                        <h5>Теги для поиска:</h5>
+                    </div>
+
+                    {% for tag in tags_info %}
+                        <div class="form-check">
+                            {% if tag in checked_tags %}
+                                <input type="checkbox" value="{{tag.tag_id}}" name="tags[]" checked />
+                            {% else %}
+                                <input type="checkbox" value="{{tag.tag_id}}" name="tags[]" />
+                            {% endif %}
+                            <label for="{{tag.tag_id}}">{{tag.tag_name}}</label>
+                        </div>
+                    {%endfor%}
                 </form>
-
-                <div class="text-block-ex">
-                    <h5>Теги для поиска:</h5>
-                </div>
-
-                <div class="tag-checkbox">
-                    <form>
-                        <label>
-                            <input type="checkbox">
-                            Пример тега
-                        </label>
-                    </form>
-
-                    <form>
-                        <label>
-                            <input type="checkbox">
-                            Пример тега
-                        </label>
-                    </form>
-
-                    <form>
-                        <label>
-                            <input type="checkbox">
-                            Пример тега
-                        </label>
-                    </form>
-                </div>
-
 
             </div>
 
             <div class="column right">
-                {% for exp in exposition_info %}
-                <div class="block-text-img">
-                    <div class="img-block">
-                        <img src="{% static 'main_page/pic/notdef-solid.svg' %}" width="128" height="128">
+                {% if expos_checked %}
+                    <h3>Экспозиции:</h3>
+                    {% for exp in exposition_info %}
+                    <div class="block-text-img">
+                        <div class="img-block">
+                            <img src="{% static ''|add:exp.exposition_get_picture %}"
+                                 width="128" height="128">
+                        </div>
+                        <div class="text-block-ex">
+                            <h5>{{exp.exposition_name}}</h5>
+                            <h6>Описание</h6>
+                            <p>{{exp.exposition_desc|truncatechars:100}}</p>
+                            <a href="{% url 'expon-detail' exp.exposition_id %}" class="btn btn-warning"> Читать детальнее</a>
+                        </div>
                     </div>
-                    <div class="text-block-ex">
-                        <h5>{{exp.exposition_name}}</h5>
-                        <h6>Описание</h6>
-                        <p>{{exp.exposition_desc}}</p>
-                    </div>
-                </div>
-                {%endfor%}
+                    {%endfor%}
+                {%endif%}
 
-                <hr align="center" width="100%" size="4" color="black" />
-
-                {% for item in all_info %}
-                <div class="block-text-img">
-                    <div class="img-block">
-                        <img src="{% static 'main_page/pic/notdef-solid.svg' %}" width="128" height="128">
+                {% if expon_checked %}
+                    <h3>Экспонаты:</h3>
+                    {% for item in all_info %}
+                    <div class="block-text-img">
+                        <div class="img-block">
+<!--                            <img src="{% static 'main_page/pic/notdef-solid.svg' %}" width="128" height="128">-->
+                            <img src="{% static ''|add:item.exhibit_get_picture %}"
+                                 width="128" height="128">
+                        </div>
+                        <div class="text-block-ex">
+                            <h5>{{item.exhibit_name}}</h5>
+                            <h6>Описание</h6>
+                            <p>{{item.exhibit_desc|truncatechars:100}}</p>
+                            <a href="{% url 'exp-detail' item.exhibit_id %}" class="btn btn-warning"> Читать детальнее</a>
+                        </div>
                     </div>
-                    <div class="text-block-ex">
-                        <h5>{{item.exhibit_name}}</h5>
-                        <h6>Описание</h6>
-                        <p>{{item.exhibit_desc}}</p>
-                    </div>
-                </div>
-                {%endfor%}
+                    {%endfor%}
+                {%endif%}
             </div>
         </div>
     </div>
