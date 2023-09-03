@@ -1,0 +1,29 @@
+{% extends 'main_page/pattern.html' %}
+{% load static %}
+
+{% block title %}{{ exposition.exposition_name }} - экспозиция{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <img src="{% static ''|add:exposition.exposition_get_picture %}"
+             width="128" height="128">
+        <h1>{{ exposition.exposition_name }}</h1>
+        <p>{{ exposition.exposition_desc }}</p>
+        <h1></h1>
+        <h5>Экспонаты входящие в экспозицию:</h5>
+        {% for exp in exposition.get_exhibits %}
+            <div class="block-text-img">
+                <div class="img-block">
+                    <img src="{% static ''|add:exp.exhibit_get_picture %}"
+                         width="128" height="128">
+                </div>
+                <div class="text-block-ex">
+                    <h5>{{exp.exhibit_name}}</h5>
+                    <h6>Описание</h6>
+                    <p>{{exp.exhibit_desc}}</p>
+                    <a href="{% url 'exp-detail' exp.exhibit_id %}" class="btn btn-warning"> Читать детальнее</a>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+{% endblock %}
