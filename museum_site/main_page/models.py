@@ -12,7 +12,7 @@ from os import path
 
 
 class Exhibit(models.Model):
-    exhibit_id = models.AutoField(primary_key=True)  # The composite primary key (exhibit_id, id_status) found, that is not supported. The first column is selected.
+    exhibit_id = models.AutoField(primary_key=True)
     exhibit_name = models.CharField(unique=True, max_length=45)
     exhibit_desc = models.CharField(max_length=1000, blank=True, null=True)
     exhibit_author = models.CharField(max_length=45, blank=True, null=True)
@@ -97,17 +97,32 @@ class ExpositionExhibits(models.Model):
 
 
 class Hall(models.Model):
+    FLOORS = (
+        (1, "1 этаж"),
+        (2, "2 этаж"),
+        (3, "3 этаж"),
+        (4, "Зал заморожен")
+    )
+
     hall_id = models.AutoField(primary_key=True)
     hall_name = models.CharField(unique=True, max_length=45)
     hall_desc = models.CharField(max_length=1000, blank=True, null=True)
-    floor_number = models.IntegerField()
+    floor_number = models.IntegerField(choices=FLOORS, blank=False)
 
     class Meta:
         db_table = 'hall'
         verbose_name_plural = 'Залы музея'
 
     def __str__(self):
-        return f"{self.hall_name}, {self.floor_number} этаж ({self.hall_id})"
+        if self.floor_number != 4:
+            name_hall = f"Зал {self.hall_name}, {self.floor_number} этаж ({self.hall_id})"
+        else:
+            name_hall = f"Зал {self.hall_name}, заморожен ({self.hall_id})"
+        return name_hall
+
+    def hall_get_exposition(self):
+        expos = Exposition.objects.filter(id_hall=self.hall_id)
+        return expos
 
 
 class Statuses(models.Model):
@@ -136,7 +151,7 @@ class Tags(models.Model):
 
 class Tickets(models.Model):
     ticket_id = models.AutoField(primary_key=True)
-    ticket_date = models.DateField(blank=False, null=True)
+    ticket_date = models.DateTimeField(blank=False, null=True)
     phone_number = models.CharField(max_length=12, null=True)
 
     class Meta:
@@ -144,4 +159,4 @@ class Tickets(models.Model):
         verbose_name_plural = 'Билеты'
 
     def __str__(self):
-        return f"{self.ticket_id} - {self.ticket_date}"
+        return f"{self.ticket_id} - {self.ticket_date} (+{self.phone_number})"

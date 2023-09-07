@@ -5,34 +5,73 @@
 {% block content %}
     <div class="features">
         <h1>Покупка билета</h1>
-        <div class="row">
-            <div class="column left">
-                <p>
-                    <input type="date" name="calendar" value="2023-08-20">
-                    <input type="submit" value="Выбрать">
-                </p>
+        <form action="{% url 'tickets' %}" method="get" class="tickets">
+            <div class="row">
+                <div class="column left">
                 <p>Выбрать дату</p>
-            </div>
+                    <p>
+                        <input type="date" name="data" value="">
+                    </p>
+                </div>
 
-            <div class="column right">
-                <p><hr>На какое время?</p>
-                <!-- Не помешало добавить интервал, но это css -->
-                <p>
-                    <input type="submit" value="10:00">
-                    <input type="submit" value="12:00">
-                    <input type="submit" value="15:00">
-                    <input type="submit" value="17:00">
-                </p>
-                <hr>
-                <p><hr>Количество билетов?</p>
-                <p>
-                    <input type="submit" value="1">
-                    <input type="submit" value="2">
-                    <input type="submit" value="3">
-                    <input type="submit" value="4">
-                </p>
-                <hr>
+                <div class="column right">
+                    <p><hr>На какое время?</p>
+                    <!-- Не помешало добавить интервал, но это css -->
+                    <div>
+                        <input type="radio" id="10:00" value="10" name="time">
+                        <label for="10:00">10:00</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="12:00" value="12" name="time">
+                        <label for="12:00">12:00</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="15:00" value="15" name="time">
+                        <label for="15:00">15:00</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="17:00" value="17" name="time">
+                        <label for="17:00">17:00</label>
+                    </div>
+                    <hr>
+                    <p><hr>Количество билетов?</p>
+                    <p>
+                        <div>
+                            <input type="radio" id="1" value="1" name="count">
+                            <label for="1">1 билет</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="2" value="2" name="count">
+                            <label for="2">2 билета</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="3" value="3" name="count">
+                            <label for="3">3 билет</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="4" value="4" name="count">
+                            <label for="4">4 билета</label>
+                        </div>
+                    </p>
+                    <hr>
+                    
+                    <label for="number">Номер телефона: </label>
+                    <input id="number" type="text" name="number" placeholder="Введите номер..." value="{{number_info}}">
+                    <hr>
+                    <input type="submit" value="Купить билет">
+
+                    
+                    {% if messages %}
+                    <hr>
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                
             </div>
-        </div>
+        </form>
     </div>
 {% endblock %}

@@ -149,3 +149,8 @@ footer {
 .form-check {
     display: flex;
 }
+
+a, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
+}

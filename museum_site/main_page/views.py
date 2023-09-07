@@ -6,6 +6,12 @@ from django.db.models import Q
 from django.views.generic import DetailView
 from .models import Exhibit
 from .models import Exposition
+from .models import Hall
+from .models import Tickets
+from django.urls import resolve
+import datetime
+from datetime import timedelta
+from django.contrib import messages
 
 
 def greeting(request):
@@ -17,11 +23,80 @@ def about(request):
 
 
 def tickets(request):
-    return render(request, 'main_page/tickets.html')
+    data = request.GET.get('data', '')
+    count = request.GET.get('count', '')
+    time = request.GET.get('time', '')
+    number = request.GET.get('number', '')
+
+    datasucces = False
+    countsucces = False
+    numbersucces = number != '' and len(number) == 11 and str(number).isnumeric()
+    if(data != ''):
+        data = datetime.datetime.strptime(data, '%Y-%m-%d')
+        if(data.weekday() != 0 and datetime.datetime.now() < data):
+            if(time != ''):
+                data = data + timedelta(hours=int(time))
+                datasucces = True
+
+
+    if(datasucces and count != '' and time != ''):
+        infoondate = models.Tickets.objects.filter(Q(ticket_date=data))
+        print(infoondate)
+        if(len(infoondate) + int(count) < 15):
+            countsucces = True
+            print(data, count, time)
+
+    message = ""
+    if(not datasucces):
+        message = "Дата или время не введены или введены неверно."
+        messages.info(request, message)
+    if(not countsucces):
+        message = "Количество билетов не введено."
+        messages.info(request, message)
+    if(not numbersucces):
+        message = "Номер не введён."
+        messages.info(request, message)
+
+    canbuy = datasucces and countsucces and numbersucces
+    if(canbuy):
+        for i in range(int(count)):
+            Tickets.objects.create(ticket_date=data, phone_number=number)
+    context = {
+        'data_info': data,
+        'count_info': count,
+        'time_info': time,
+        'number_info':number,
+        'canbuy': canbuy,
+    }
+    if(canbuy):
+        print("sadasd")
+        return render(request, 'main_page/successfulbuy.html')
+    else:
+        return render(request, 'main_page/tickets.html', context)
+
+def successfulbuy(request):
+    return render(request, 'main_page/successfulbuy.html')
 
 
 def plan(request):
-    return render(request, 'main_page/plan.html')
+    url_name = resolve(request.path).url_name
+    if url_name == 'plan1':
+        floor_info = models.Hall.objects.filter(floor_number=1)
+        hall_floor = 1
+    elif url_name == 'plan2':
+        floor_info = models.Hall.objects.filter(floor_number=2)
+        hall_floor = 2
+    else:
+        floor_info = models.Hall.objects.filter(floor_number=3)
+        hall_floor = 3
+
+
+    context = {
+        'url_name': url_name,
+        'halls': floor_info,
+        'hall_floor': hall_floor,
+    }
+    return render(request, 'main_page/plan.html', context)
 
 
 def search(request):
@@ -105,4 +180,9 @@ class ExponDetailView(DetailView):
     model = Exposition
     template_name = 'main_page\details_view_exposition.html'
     context_object_name = 'exposition'
+
+class HallDetailView(DetailView):
+     model = Hall
+     template_name = 'main_page\details_view_hall.html'
+     context_object_name = 'hall'
 

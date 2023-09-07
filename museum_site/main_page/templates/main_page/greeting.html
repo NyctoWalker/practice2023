@@ -1,10 +1,13 @@
 {% extends 'main_page/pattern.html' %}
+{% load static %}
 
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
     <div class="features">
         <h1>Главная страница</h1>
-        <p>Добро пожаловать на сайт музея "Ноунейм!"</p>
+        <a href="https://www.culture.ru/pushkinskaya-karta">
+                    <img src="{% static 'main_page/pic/pushkin.jpg' %}">
+        </a>
     </div>
 {% endblock %}

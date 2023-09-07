@@ -1,0 +1,31 @@
+{% extends 'main_page/pattern.html' %}
+{% load static %}
+
+{% block title %}{{ hall.hall_name }} - зал{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>{{ hall.hall_name }}</h1>
+        <h6>Описание</h6>
+        <p>{{ hall.hall_desc}}</p>
+        <h6>Этаж: {{hall.floor_number}}</h6>
+    </div>
+
+    <h1></h1>
+    <h5>Включает экспозиции:</h5>
+
+    {% for exh in hall.hall_get_exposition %}
+            <div class="block-text-img">
+                <div class="img-block">
+                    <img src="{% static ''|add:exh.exposition_get_picture %}"
+                         width="128" height="128">
+                </div>
+                <div class="text-block-ex">
+                    <h5>{{exh.exposition_name}}</h5>
+                    <h6>Описание</h6>
+                    <p>{{exh.exposition_desc}}</p>
+                    <a href="{% url 'expon-detail' exh.exposition_id %}" class="btn btn-warning"> Читать детальнее</a>
+                </div>
+            </div>
+        {%endfor%}
+{% endblock %}

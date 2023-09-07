@@ -1,16 +1,17 @@
 {% extends 'main_page/pattern.html' %}
 {% load static %}
 
-{% block title %}План Здания/Первый Этаж{% endblock %}
+{% block title %}
+    План Здания/{{hall_floor}}-й Этаж
+{% endblock %}
 
 {% block content %}
     <div class="features">
         <h1>План первого этажа!</h1>
         <div class="row">
             <div class="column left">
-                <ul type="circle">
+                <ul type="circle" style="list-style-type: none">
                     <li>
-                        <!-- Нажатие на кнопку переносит на странцу plan1 (нужно поменять на другую - название тестовое) -->
                         <a href="{% url 'plan1' %}">
                             1-й этаж
                         </a>
@@ -26,12 +27,16 @@
                         </a>
                     </li>
                 </ul>
-                <h5>Выбранный зал:</h5>
-                <p>Зал не выбран</p>
+                <h5>Залы на этаже:</h5>
+                {% for hall in halls %}
+                <a href="{% url 'hall-detail' hall.hall_id %}" role="button">
+                    <p>{{hall.hall_name}}</p>
+                </a>
+                {%endfor%}
             </div>
 
             <div class="column right">
-                <img src="{% static 'main_page/pic/1.png' %}" >
+                <img src="{% static 'main_page/pic/' %}{{hall_floor}}.png" >
             </div>
         </div>
     </div>

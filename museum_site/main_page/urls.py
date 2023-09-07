@@ -14,4 +14,6 @@ urlpatterns = [
     path('plan/3', views.plan, name='plan3'),
     path('exhibits/<int:pk>', views.ExpDetailView.as_view(), name='exp-detail'),
     path('expositions/<int:pk>', views.ExponDetailView.as_view(), name='expon-detail'),
+    path('hall/<int:pk>', views.HallDetailView.as_view(), name='hall-detail'),
+    path('successfulbuy', views.successfulbuy, name='successfulbuy'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
